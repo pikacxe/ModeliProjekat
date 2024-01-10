@@ -254,12 +254,13 @@ namespace WpfClient
                 {
                     a.PropertyId = mc;
                 }
+                else if (tbx_associationPropId.Text.StartsWith("0x"))
+                {
+                    gid = long.Parse(tbx_associationPropId.Text.Substring(2), System.Globalization.NumberStyles.HexNumber);
+                }
                 else
                 {
-                    MessageBox.Show("Association property id is not valid", "Error", MessageBoxButton.OK);
-                    tbx_associationPropId.Focus();
-                    tbx_associationPropId.Effect = new DropShadowEffect() { Color = Colors.Red };
-                    return;
+                    gid = long.Parse(tbx_associationPropId.Text);
                 }
                 var res = GdaQueryProxy.GetRelatedValues(gid, properties, a);
                 Populate_DataGrid(res);
