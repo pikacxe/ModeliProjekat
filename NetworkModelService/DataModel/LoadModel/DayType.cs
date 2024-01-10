@@ -19,7 +19,7 @@ namespace FTN.Services.NetworkModelService.DataModel.LoadModel
 
         public override bool Equals(object x)
         {
-           if(base.Equals(x))
+            if (base.Equals(x))
             {
                 DayType d = (DayType)x;
                 return (CompareHelper.CompareLists(d.schedules, this.schedules, true));
@@ -54,6 +54,9 @@ namespace FTN.Services.NetworkModelService.DataModel.LoadModel
                 case ModelCode.DAYTYPE_SEASONDAYTYPESCHS:
                     property.SetValue(schedules);
                     break;
+                default:
+                    base.GetProperty(property);
+                    break;
             }
         }
 
@@ -87,7 +90,7 @@ namespace FTN.Services.NetworkModelService.DataModel.LoadModel
 
         public override void GetReferences(Dictionary<ModelCode, List<long>> references, TypeOfReference refType)
         {
-            if(schedules != null && schedules.Count > 0 && (refType == TypeOfReference.Target || refType == TypeOfReference.Both))
+            if (schedules != null && schedules.Count > 0 && (refType == TypeOfReference.Target || refType == TypeOfReference.Both))
             {
                 references[ModelCode.DAYTYPE_SEASONDAYTYPESCHS] = schedules.GetRange(0, schedules.Count);
             }

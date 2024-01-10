@@ -101,6 +101,9 @@ namespace FTN.Services.NetworkModelService.DataModel.Wires
                 case ModelCode.SWITCH_SWITCHONDATE:
                     switchOnDate = property.AsDateTime();
                     break;
+                default:
+                    base.SetProperty(property);
+                    break;
             }
         }
 

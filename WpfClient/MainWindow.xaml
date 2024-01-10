@@ -5,70 +5,176 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="GDA client" Height="800" Width="1200">
+        Title="GDA client" Height="800" Width="1200"
+        ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock FontSize="18" Margin="20,20,20,10" HorizontalAlignment="Left" VerticalAlignment="Bottom">Select resource:</TextBlock>
-            <ComboBox x:Name="cmbxResources"
-                      Grid.Row="1" Margin="10"
-                      SelectionChanged="cmbxResources_SelectionChanged"
-                      HorizontalContentAlignment="Left"
-                      VerticalContentAlignment="Center"
-                      FontSize="20"
-                      Padding="10"/>
-            <TextBlock FontSize="18" Margin="20,20,20,10"
-                       HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                       Grid.Row="0" Grid.Column="1"
-                       >Select one or more properties:</TextBlock>
-            <ListBox x:Name="lbxProperties" Margin="20" Grid.Row="1"
-                     Grid.Column="1" 
-                     Grid.ColumnSpan="2" 
-                     Grid.RowSpan="3"
-                     SelectionMode="Multiple"/>
-            <Button Grid.Column="4" Grid.Row="3"
-                    Margin="15" Click="Button_Click">Get data</Button>
-        </Grid>
+        <TabControl Margin="15 10 15 10" BorderBrush="DarkGray" BorderThickness="2">
+            <TabItem Header="Get extent values" FontSize="18" Padding="10" BorderBrush="DarkGray" BorderThickness="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="18" Margin="20,20,20,10" HorizontalAlignment="Left" VerticalAlignment="Bottom">Select resource:</TextBlock>
+                    <ComboBox x:Name="cmbxResources"
+                                  Grid.Row="1" Margin="15 0 15 15"
+                                  SelectionChanged="cmbxResources_SelectionChanged"
+                                  HorizontalContentAlignment="Left"
+                                  VerticalContentAlignment="Center"
+                                  FontSize="16"
+                                  Padding="5"/>
+                    <TextBlock FontSize="18" Margin="15,20,20,10"
+                                   HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                   Grid.Row="0" Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   >Select one or more properties:</TextBlock>
+                    <ListBox x:Name="lbxProperties" Margin="15 0 20 15" Grid.Row="1"
+                                 Grid.Column="1" 
+                                 Grid.RowSpan="2"
+                                 SelectionMode="Multiple"/>
+
+                    <Button x:Name="btn_GEV" Grid.Column="3" Grid.Row="2"
+                                Margin="15 10"
+                                Click="btn_GEV_Click">Get extent values</Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Get values" FontSize="18" Padding="10" BorderBrush="DarkGray" BorderThickness="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="18" Margin="15 0"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               HorizontalAlignment="Left" VerticalAlignment="Bottom">Select resource:</TextBlock>
+                    <TextBox x:Name="tb_gv" Grid.Row="1" Grid.Column="0"
+                             VerticalContentAlignment="Center"
+                             FontSize="18"
+                             Margin="10" TextChanged="tb_gv_TextChanged"/>
+                    <Button x:Name="btn_GV" Content="Get value" 
+                            Grid.Column="0"
+                            Grid.Row="2" Margin="15 10"
+                            Click="btn_GV_Click"/>
+                    <ListView x:Name="lv_resource" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
+                              Margin="10"
+                              HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Id}" Margin="5" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding}" Margin="5" Grid.Column="2" HorizontalAlignment="Left" TextAlignment="Right" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Get related values" FontSize="18" Padding="10" BorderBrush="DarkGray" BorderThickness="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="18"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               Padding="10 0"
+                               HorizontalAlignment="Left" VerticalAlignment="Bottom">Select resource:</TextBlock>
+                    <TextBox x:Name="tb_grv" Grid.Row="1" Grid.Column="0"
+                             VerticalContentAlignment="Center"
+                             FontSize="18"
+                             Margin="10" TextChanged="tb_grv_TextChanged"
+                             />
+                    <Button x:Name="btn_GRV" Content="Get related values" 
+                            Grid.Column="0"
+                            Grid.Row="2" Margin="15 10"
+                            Click="btn_GRV_Click"/>
+                    <TextBlock Text="Select association:" Grid.Column="1"
+                               Padding="10 0"
+                               HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <ComboBox x:Name="cmbxAssociationTypes" Grid.Column="1" Grid.Row="1"
+                              Margin="15 10" SelectionChanged="cmbxAssociationTypes_SelectionChanged"/>
+                    <TextBox x:Name="tbx_associationPropId" Grid.Row="2" Grid.Column="1"
+                             FontSize="18"
+                             Margin="15 10"/>
+                    <TextBlock Text="Select properties:" Grid.Column="2" Grid.Row="0"
+                               Padding="10 0"
+                               HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <ListView x:Name="lv_association" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Margin="15 10"
+                              SelectionMode="Multiple"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
         <DataGrid x:Name="dataGridView"  Grid.Row="1"
-                  Margin="25"
-                  ItemsSource="{Binding CurrentRDBatch}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True" AlternatingRowBackground="#FF6D6C6C" AlternationCount="1" ColumnHeaderHeight="50" HeadersVisibility="Column">
+           Margin="15 0"
+           FontSize="16"
+           ItemsSource="{Binding CurrentRDBatch}"
+           AutoGenerateColumns="False"
+           IsReadOnly="True" AlternatingRowBackground="LightGray" AlternationCount="1"
+           ColumnHeaderHeight="50" HeadersVisibility="Column"
+           VerticalContentAlignment="Center" CanUserAddRows="False"
+           CanUserDeleteRows="False" CanUserResizeRows="False"
+           SelectionMode="Single"
+           >
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="GID" Binding="{Binding GlobalIdHex}" />
-                <DataGridTextColumn Header="DMS Type" Binding="{Binding Type}" />
+                <DataGridTemplateColumn Header="DMS Type">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Type}" Padding="5" TextAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
                 <!-- Dynamically generate columns for each property -->
-                <DataGridTemplateColumn Header="Properties">
+                <DataGridTemplateColumn Header="Properties" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ItemsControl ItemsSource="{Binding Properties}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Id}" Margin="0 0 10 0" Width="200"/>
-                                            <TextBlock Text="{Binding Name}" Margin="0 0 10 0" Width="200"/>
-                                            <TextBlock Text="{Binding Type}" Margin="0 0 10 0" Width="200" />
-                                            <TextBlock Text="{Binding Value}" Margin="0 0 10 0" Width="200"
-                                                       TextAlignment="Right"/>
-                                            
-                                        </StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="3*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Id}" Margin="5" Grid.Column="0"/>
+                                            <TextBlock Text="{Binding Name}" Margin="5" Grid.Column="1"/>
+                                            <TextBlock Text="{Binding Type}" Margin="5" Grid.Column="2"/>
+                                            <TextBlock Text="{Binding Value}" Margin="5" Grid.Column="3" TextAlignment="Left"/>
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -77,5 +183,10 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock x:Name="tb_stats"
+                   Grid.Column="0"
+                   Grid.Row="2"
+                   FontSize="14" Margin="15"
+                   Width="400" HorizontalAlignment="Left"/>
     </Grid>
 </Window>
